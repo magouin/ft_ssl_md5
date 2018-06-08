@@ -227,6 +227,10 @@ char	*compute_md5(void *original_file, int64_t original_file_size)
 		stage2(&params, nbr_du_milieu);
 		stage3(&params, nbr_du_milieu);
 		stage4(&params, nbr_du_milieu);
+		params.buffer[0] += buffer_save[0];
+		params.buffer[1] += buffer_save[1];
+		params.buffer[2] += buffer_save[2];
+		params.buffer[3] += buffer_save[3];
 		i++;
 	}
 	printf("%x%x%x%x\n", params.buffer[0], params.buffer[1], params.buffer[2], params.buffer[3]);
