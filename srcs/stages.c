@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stages.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcamhi <jcamhi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/10 18:42:50 by jcamhi            #+#    #+#             */
+/*   Updated: 2018/06/10 18:43:01 by jcamhi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <ft_ssl.h>
 
-
-void	functions (t_params *params, t_fghi function, uint n) //ABCD
+void	functions(t_params *params, t_fghi function, uint n)
 {
 	uint	*a;
 	uint	*b;
@@ -12,10 +23,8 @@ void	functions (t_params *params, t_fghi function, uint n) //ABCD
 	b = params->buffer + (5 - n) % 4;
 	c = params->buffer + (6 - n) % 4;
 	d = params->buffer + (7 - n) % 4;
-
 	*a = *b + cshift((*a + function(*b, *c, *d)
 		+ (params->x)[params->k] + params->t[params->i]), params->s);
-	// printf("{\n\t%c%c%c%c\n\tf = %x\n\tg = %x\n\n\tA = %x\n\tB = %x\n\tC = %x\n\tD = %x\n}\n", (char)((a - params->buffer) + 'A'), (char)((b - params->buffer) + 'A'), (char)((c - params->buffer) + 'A'), (char)((d - params->buffer) + 'A'), function(*b, *c, *d), params->k, *a, *b, *c, *d);
 }
 
 void	stage1(t_params *params, char nbr_du_milieu[4][4])
@@ -38,7 +47,7 @@ void	stage2(t_params *params, char nbr_du_milieu[4][4])
 	uint	i;
 
 	i = 0;
-	params->k = 12; // 12 + 5 % 16 = 1
+	params->k = 12;
 	while (i < 16)
 	{
 		params->k = (params->k + 5) % 16;
@@ -54,7 +63,7 @@ void	stage3(t_params *params, char nbr_du_milieu[4][4])
 	uint	i;
 
 	i = 0;
-	params->k = 2; // 2 + 3 % 16 = 5
+	params->k = 2;
 	while (i < 16)
 	{
 		params->k = (params->k + 3) % 16;
@@ -70,7 +79,7 @@ void	stage4(t_params *params, char nbr_du_milieu[4][4])
 	uint	j;
 
 	j = 0;
-	params->k = 9; // 9 + 7 % 16 = 0
+	params->k = 9;
 	while (j < 16)
 	{
 		params->k = (params->k + 7) % 16;
