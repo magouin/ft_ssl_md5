@@ -29,4 +29,20 @@ void print_memory(char *start, size_t size);
 
 void    *read_file(char *filename, size_t *file_size);
 
+void	stage1(t_params *params, char nbr_du_milieu[4][4]);
+void	stage2(t_params *params, char nbr_du_milieu[4][4]);
+void	stage3(t_params *params, char nbr_du_milieu[4][4]);
+void	stage4(t_params *params, char nbr_du_milieu[4][4]);
+
+uint	f(uint b, uint c, uint d);
+uint	g(uint b, uint c, uint d);
+uint	h(uint b, uint c, uint d);
+uint	i(uint b, uint c, uint d);
+
+
+uint cshift (uint nbr, uint s);
+uint end_conv_32(uint nbr);
+uint64_t end_conv_64(uint64_t nbr);
+
+
 #endif

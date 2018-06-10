@@ -17,30 +17,6 @@ uint64_t end_conv_64(uint64_t nbr)
 	return (uint64_t)(((uint64_t)(end_conv_32(nbr >> 32)) << 32) | ((end_conv_32((uint)nbr))) );
 }
 
-uint	f(uint b, uint c, uint d)
-{
-	 return ((b & c) | ((~b) & d));
-}
-
-uint	g(uint b, uint c, uint d)
-{
-	return ((b & d) | (c & (~d)));
-}
-
-uint	h(uint b, uint c, uint d)
-{
-	return (b ^ c ^ d);
-}
-
-uint	i(uint b, uint c, uint d)
-{
-	int a = (c ^ (b | (~d)));
-	a = (~d);
-	a = b | (~d);
-
-	return (c ^ (b | (~d)));
-}
-
 void	initialize_buffer (uint *buffer)
 {
 	buffer[0] = 0x67452301u;
@@ -61,90 +37,9 @@ void	initialize_t (uint t[65])
 	}
 }
 
-void	functions (t_params *params, t_fghi function, uint n) //ABCD
-{
-	uint	*a;
-	uint	*b;
-	uint	*c;
-	uint	*d;
-
-	a = params->buffer + (4 - n) % 4;
-	b = params->buffer + (5 - n) % 4;
-	c = params->buffer + (6 - n) % 4;
-	d = params->buffer + (7 - n) % 4;
-
-	*a = *b + cshift((*a + function(*b, *c, *d)
-		+ (params->x)[params->k] + params->t[params->i]), params->s);
-	printf("{\n\t%c%c%c%c\n\tf = %x\n\tg = %x\n\n\tA = %x\n\tB = %x\n\tC = %x\n\tD = %x\n}\n", (char)((a - params->buffer) + 'A'), (char)((b - params->buffer) + 'A'), (char)((c - params->buffer) + 'A'), (char)((d - params->buffer) + 'A'), function(*b, *c, *d), params->k, *a, *b, *c, *d);
-}
-
 // M[] = words du message
 
-void	stage1(t_params *params, char nbr_du_milieu[4][4])
-{
-	uint	i;
-
-	i = 0;
-	while (i < 16)
-	{
-		params->k = i;
-		params->s = nbr_du_milieu[0][i % 4];
-		params->i = i + 1;
-		functions(params, f, i % 4);
-		i++;
-	}
-}
-
-void	stage2(t_params *params, char nbr_du_milieu[4][4])
-{
-	uint	i;
-
-	i = 0;
-	params->k = 12; // 12 + 5 % 16 = 1
-	while (i < 16)
-	{
-		params->k = (params->k + 5) % 16;
-		params->s = nbr_du_milieu[1][i % 4];
-		(params->i)++;
-		functions(params, g, i % 4);
-		i++;
-	}
-}
-
-void	stage3(t_params *params, char nbr_du_milieu[4][4])
-{
-	uint	i;
-
-	i = 0;
-	params->k = 2; // 2 + 3 % 16 = 5
-	while (i < 16)
-	{
-		params->k = (params->k + 3) % 16;
-		params->s = nbr_du_milieu[2][i % 4];
-		(params->i)++;
-		functions(params, h, i % 4);
-		i++;
-	}
-}
-
-void	stage4(t_params *params, char nbr_du_milieu[4][4])
-{
-	uint	j;
-
-	j = 0;
-	params->k = 9; // 9 + 7 % 16 = 0
-	while (j < 16)
-	{
-		params->k = (params->k + 7) % 16;
-		params->s = nbr_du_milieu[3][j % 4];
-		(params->i)++;
-		functions(params, i, j % 4);
-		j++;
-	}
-}
-
-
-char	*compute_md5(void *original_file, int64_t original_file_size)
+char	*compute_md5(void *original_file, uint64_t original_file_size)
 {
 	int64_t	size;
 	void		*file;
@@ -154,16 +49,13 @@ char	*compute_md5(void *original_file, int64_t original_file_size)
 	uint		buffer_save[4]; // AA BB CC DD
 	char nbr_du_milieu [4][4];
 	t_params	params;
-	int		f;
-	int g;
-	int temp;
+	static int heu = 0;
 
 	ft_memcpy(nbr_du_milieu, (char[4][4]){{7,12,17,22},{5,9,14,20},{4,11,16,23},{6,10,15,21}}, sizeof(nbr_du_milieu));
 
 	size = (original_file_size / 64 + 1) * 64;
 	if (size - original_file_size <= 8)
 		size += 64;
-	// printf("padded size : %llu\n", size);
 	if (!(file = malloc(size)))
 		return (NULL);
 	ft_memcpy(file, original_file, original_file_size);
@@ -175,11 +67,7 @@ char	*compute_md5(void *original_file, int64_t original_file_size)
 		*(uint8_t *)(file + original_file_size + 1 + i) = 0x00;
 		i++;
 	}
-	// *(int64_t*)(file + original_file_size + 1 + i) = END_CONV_64((uint64_t) original_file_size);
-	*(int64_t*)(file + original_file_size + 1 + i) = original_file_size;
-
-	// print_memory(file, size);
-	// write(1, file, size);
+	*(uint64_t*)(file + original_file_size + 1 + i) = original_file_size << 3;
 
 	initialize_buffer(params.buffer);
 	initialize_t(params.t);
@@ -190,10 +78,8 @@ char	*compute_md5(void *original_file, int64_t original_file_size)
 		while (j <= 15)
 		{
 			(params.x)[j] = ((uint*)file)[tour * 16 + j];
-			printf("%d\n", (params.x)[j]);
 			j++;
 		}
-		// ft_memcpy(buffer_save, params.buffer, sizeof(params.buffer));
 		buffer_save[0] = params.buffer[0];
 		buffer_save[1] = params.buffer[1];
 		buffer_save[2] = params.buffer[2];
@@ -229,9 +115,7 @@ int main(int argc, char **argv)
 	{
 		return (2);
 	}
-	// write(1, file, file_size);
-
-	// printf("%d\n", cshift(3221225472u,2));
+	printf("Read ok \n");
 	file = compute_md5(file, file_size);
 	free(file);
 }

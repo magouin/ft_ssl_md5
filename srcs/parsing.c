@@ -10,11 +10,17 @@ void	*memjoin_af1(void *m1, size_t s1, const void *m2, size_t s2)
 	free(m1);
 	ft_memcpy(ret + s1, m2, s2);
 	return (ret);
+
+/*
+	* return ft_memcpy(realloc(m1, s1 + s2) + s1, m2, s2) - s1;
+*/
+
 }
+
 
 void    *read_file(char *filename, size_t *file_size)
 {
-	char		buffer[32];
+	char		buffer[8192];
 	int		fd;
 	ssize_t	r;
 	void		*ret;
@@ -30,7 +36,7 @@ void    *read_file(char *filename, size_t *file_size)
 		free (ret);
 		return (NULL);
 	}
-	while ((r = read(fd, buffer, 32)))
+	while ((r = read(fd, buffer, 8192)))
 	{
 		if (r < 0)
 		{

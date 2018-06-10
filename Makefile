@@ -1,6 +1,8 @@
 SRC_NAME = main.c \
 		print_memory.c \
-		parsing.c
+		parsing.c \
+		stages.c \
+		md5_fghi.c
 
 OBJ_PATH = ./obj/
 
