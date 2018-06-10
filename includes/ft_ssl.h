@@ -34,6 +34,9 @@ void	stage2(t_params *params, char nbr_du_milieu[4][4]);
 void	stage3(t_params *params, char nbr_du_milieu[4][4]);
 void	stage4(t_params *params, char nbr_du_milieu[4][4]);
 
+void	compute_buffer(t_params *params, char nbr_du_milieu[4][4], void *buffer);
+
+
 uint	f(uint b, uint c, uint d);
 uint	g(uint b, uint c, uint d);
 uint	h(uint b, uint c, uint d);
