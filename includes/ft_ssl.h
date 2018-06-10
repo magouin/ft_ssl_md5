@@ -19,7 +19,8 @@ typedef struct s_params
 	uint s;
 	uint i;
 	uint t[65];
-	uint x[16];
+	// uint x[16];
+	const uint *x;
 }		t_params;
 
 typedef uint	(*t_fghi) (uint, uint, uint);
@@ -27,7 +28,7 @@ typedef void (*t_f1234) (t_params*, t_fghi);
 
 void print_memory(char *start, size_t size);
 
-void    *read_file(char *filename, size_t *file_size);
+int    read_file(char *filename);
 
 void	stage1(t_params *params, char nbr_du_milieu[4][4]);
 void	stage2(t_params *params, char nbr_du_milieu[4][4]);
@@ -35,7 +36,6 @@ void	stage3(t_params *params, char nbr_du_milieu[4][4]);
 void	stage4(t_params *params, char nbr_du_milieu[4][4]);
 
 void	compute_buffer(t_params *params, char nbr_du_milieu[4][4], void *buffer);
-
 
 uint	f(uint b, uint c, uint d);
 uint	g(uint b, uint c, uint d);
@@ -45,7 +45,6 @@ uint	i(uint b, uint c, uint d);
 
 uint cshift (uint nbr, uint s);
 uint end_conv_32(uint nbr);
-uint64_t end_conv_64(uint64_t nbr);
 
 
 #endif
