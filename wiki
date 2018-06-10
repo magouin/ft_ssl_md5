@@ -1,0 +1,593 @@
+128
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+{
+	f = 98badcfe
+	g = 0
+
+	A = 98badcfe
+	B = efcdab89
+	C = a5202774
+	D = 10325476
+}
+{
+	f = bd9afb8a
+	g = 1
+
+	A = efcdab89
+	B = a5202774
+	C = f59592dd
+	D = 98badcfe
+}
+{
+	f = af482b54
+	g = 2
+
+	A = a5202774
+	B = f59592dd
+	C = e7f06b23
+	D = efcdab89
+}
+{
+	f = e5900655
+	g = 3
+
+	A = f59592dd
+	B = e7f06b23
+	C = 1b163203
+	D = a5202774
+}
+{
+	f = e791a2df
+	g = 4
+
+	A = e7f06b23
+	B = 1b163203
+	C = 32033344
+	D = f59592dd
+}
+{
+	f = d7f27a23
+	g = 5
+
+	A = 1b163203
+	B = 32033344
+	C = 2f35d494
+	D = e7f06b23
+}
+{
+	f = 32033207
+	g = 6
+
+	A = 32033344
+	B = 2f35d494
+	C = f5b158db
+	D = 1b163203
+}
+{
+	f = 27337394
+	g = 7
+
+	A = 2f35d494
+	B = f5b158db
+	C = 9bc13ce9
+	D = 32033344
+}
+{
+	f = b5b5d8dd
+	g = 8
+
+	A = f5b158db
+	B = 9bc13ce9
+	C = 3893b991
+	D = 2f35d494
+}
+{
+	f = dda178cb
+	g = 9
+
+	A = 9bc13ce9
+	B = 3893b991
+	C = fce4a312
+	D = f5b158db
+}
+{
+	f = 3b81bdf9
+	g = a
+
+	A = 3893b991
+	B = fce4a312
+	C = e1ef0576
+	D = 9bc13ce9
+}
+{
+	f = f8f4b993
+	g = b
+
+	A = fce4a312
+	B = e1ef0576
+	C = 70768a29
+	D = 3893b991
+}
+{
+	f = ece62132
+	g = c
+
+	A = e1ef0576
+	B = 70768a29
+	C = f56c7cf1
+	D = fce4a312
+}
+{
+	f = 70e70927
+	g = d
+
+	A = 70768a29
+	B = f56c7cf1
+	C = 374943a7
+	D = e1ef0576
+}
+{
+	f = 757ec8a9
+	g = e
+
+	A = f56c7cf1
+	B = 374943a7
+	C = 5aa53f75
+	D = 70768a29
+}
+{
+	f = b74943a5
+	g = f
+
+	A = 374943a7
+	B = 5aa53f75
+	C = d6819c6a
+	D = f56c7cf1
+}
+{
+	f = 48a43c51
+	g = 1
+
+	A = 5aa53f75
+	B = d6819c6a
+	C = 5c5d70f0
+	D = 374943a7
+}
+{
+	f = 8400800b
+	g = 6
+
+	A = d6819c6a
+	B = 5c5d70f0
+	C = 714b55e7
+	D = 5aa53f75
+}
+{
+	f = 85c6091
+	g = b
+
+	A = 5c5d70f0
+	B = 714b55e7
+	C = 6fe1383e
+	D = d6819c6a
+}
+{
+	f = 21020507
+	g = 0
+
+	A = 714b55e7
+	B = 6fe1383e
+	C = 99f4be4
+	D = 5c5d70f0
+}
+{
+	f = ea02819
+	g = 5
+
+	A = 6fe1383e
+	B = 99f4be4
+	C = 2f3478ac
+	D = 714b55e7
+}
+{
+	f = 1e43c1
+	g = a
+
+	A = 99f4be4
+	B = 2f3478ac
+	C = 8a906f93
+	D = 6fe1383e
+}
+{
+	f = 26203009
+	g = f
+
+	A = 2f3478ac
+	B = 8a906f93
+	C = 5e428b3b
+	D = 99f4be4
+}
+{
+	f = 80800713
+	g = 4
+
+	A = 8a906f93
+	B = 5e428b3b
+	C = 4a39aa6f
+	D = 2f3478ac
+}
+{
+	f = 54428029
+	g = 9
+
+	A = 5e428b3b
+	B = 4a39aa6f
+	C = f55281e3
+	D = 8a906f93
+}
+{
+	f = 392045
+	g = e
+
+	A = 4a39aa6f
+	B = f55281e3
+	C = f681de7f
+	D = 5e428b3b
+}
+{
+	f = b5420181
+	g = 3
+
+	A = f55281e3
+	B = f681de7f
+	C = 5d12a095
+	D = 4a39aa6f
+}
+{
+	f = 2815e1d
+	g = 8
+
+	A = f681de7f
+	B = 5d12a095
+	C = 34abc1e6
+	D = f55281e3
+}
+{
+	f = 9122081
+	g = d
+
+	A = 5d12a095
+	B = 34abc1e6
+	C = 3dbd2f1b
+	D = f681de7f
+}
+{
+	f = 20a94163
+	g = 2
+
+	A = 34abc1e6
+	B = 3dbd2f1b
+	C = 7344e343
+	D = 5d12a095
+}
+{
+	f = 9142e19
+	g = 7
+
+	A = 3dbd2f1b
+	B = 7344e343
+	C = e7a6d6a8
+	D = 34abc1e6
+}
+{
+	f = 4240c041
+	g = c
+
+	A = 7344e343
+	B = e7a6d6a8
+	C = d2b71814
+	D = 3dbd2f1b
+}
+{
+	f = 46552dff
+	g = 5
+
+	A = e7a6d6a8
+	B = d2b71814
+	C = 13807ddc
+	D = 7344e343
+}
+{
+	f = 2691b360
+	g = 8
+
+	A = d2b71814
+	B = 13807ddc
+	C = 57e99ee6
+	D = e7a6d6a8
+}
+{
+	f = 96defb2e
+	g = b
+
+	A = 13807ddc
+	B = 57e99ee6
+	C = 8ae28b09
+	D = d2b71814
+}
+{
+	f = ce8b6833
+	g = e
+
+	A = 57e99ee6
+	B = 8ae28b09
+	C = b4b21ee5
+	D = 13807ddc
+}
+{
+	f = 69b90b0a
+	g = 1
+
+	A = 8ae28b09
+	B = b4b21ee5
+	C = d4395187
+	D = 57e99ee6
+}
+{
+	f = ea69c46b
+	g = 4
+
+	A = b4b21ee5
+	B = d4395187
+	C = 65d125f8
+	D = 8ae28b09
+}
+{
+	f = 55a6a9a
+	g = 7
+
+	A = d4395187
+	B = 65d125f8
+	C = a6d4acf0
+	D = b4b21ee5
+}
+{
+	f = 173cd88f
+	g = a
+
+	A = 65d125f8
+	B = a6d4acf0
+	C = 991a0449
+	D = d4395187
+}
+{
+	f = 5a1f8d41
+	g = d
+
+	A = a6d4acf0
+	B = 991a0449
+	C = 85fdd2e
+	D = 65d125f8
+}
+{
+	f = 37917597
+	g = 0
+
+	A = 991a0449
+	B = 85fdd2e
+	C = 2680296e
+	D = a6d4acf0
+}
+{
+	f = b7c5f009
+	g = 3
+
+	A = 85fdd2e
+	B = 2680296e
+	C = f3fe5cf7
+	D = 991a0449
+}
+{
+	f = dd21a8b7
+	g = 6
+
+	A = 2680296e
+	B = f3fe5cf7
+	C = f6bbbedc
+	D = 85fdd2e
+}
+{
+	f = 23c5cb45
+	g = 9
+
+	A = f3fe5cf7
+	B = f6bbbedc
+	C = 5663499c
+	D = 2680296e
+}
+{
+	f = 5326abb7
+	g = c
+
+	A = f6bbbedc
+	B = 5663499c
+	C = 69db9ca0
+	D = f3fe5cf7
+}
+{
+	f = c9036be0
+	g = f
+
+	A = 5663499c
+	B = 69db9ca0
+	C = afab7944
+	D = f6bbbedc
+}
+{
+	f = 9013ac78
+	g = 2
+
+	A = 69db9ca0
+	B = afab7944
+	C = 8c513724
+	D = 5663499c
+}
+{
+	f = 31de0e3b
+	g = 0
+
+	A = afab7944
+	B = 8c513724
+	C = a6efde03
+	D = 69db9ca0
+}
+{
+	f = 7aaee99f
+	g = 7
+
+	A = 8c513724
+	B = a6efde03
+	C = 7d0736a1
+	D = afab7944
+}
+{
+	f = d94020f8
+	g = e
+
+	A = a6efde03
+	B = 7d0736a1
+	C = 5bf8d0e0
+	D = 8c513724
+}
+{
+	f = 26ffc75d
+	g = 5
+
+	A = 7d0736a1
+	B = 5bf8d0e0
+	C = 334ecd73
+	D = a6efde03
+}
+{
+	f = e8061d9f
+	g = c
+
+	A = 5bf8d0e0
+	B = 334ecd73
+	C = 47a426f0
+	D = 7d0736a1
+}
+{
+	f = d4e9e28c
+	g = 3
+
+	A = 334ecd73
+	B = 47a426f0
+	C = 3f3b2673
+	D = 5bf8d0e0
+}
+{
+	f = b81f100f
+	g = a
+
+	A = 47a426f0
+	B = 3f3b2673
+	C = 29f13076
+	D = 334ecd73
+}
+{
+	f = 86c0df0c
+	g = 1
+
+	A = 3f3b2673
+	B = 29f13076
+	C = 73f922f7
+	D = 47a426f0
+}
+{
+	f = da0ccb89
+	g = 8
+
+	A = 29f13076
+	B = 73f922f7
+	C = ca55551b
+	D = 3f3b2673
+}
+{
+	f = ada6fd6c
+	g = f
+
+	A = 73f922f7
+	B = ca55551b
+	C = 68054c7
+	D = 29f13076
+}
+{
+	f = 44d388d4
+	g = 6
+
+	A = ca55551b
+	B = 68054c7
+	C = 4af5da9
+	D = 73f922f7
+}
+{
+	f = 332fab2a
+	g = d
+
+	A = 68054c7
+	B = 4af5da9
+	C = fd0e03c4
+	D = ca55551b
+}
+{
+	f = f9d0f655
+	g = 4
+
+	A = 4af5da9
+	B = fd0e03c4
+	C = db808072
+	D = 68054c7
+}
+{
+	f = 6dea1b2
+	g = b
+
+	A = fd0e03c4
+	B = db808072
+	C = 43233b9c
+	D = 4af5da9
+}
+{
+	f = 98737fcd
+	g = 2
+
+	A = db808072
+	B = 43233b9c
+	C = 9b3c1f99
+	D = fd0e03c4
+}
+{
+	f = fc5c4401
+	g = 9
+
+	A = 43233b9c
+	B = 9b3c1f99
+	C = 618bdbc
+	D = db808072
+}
+42c5a373f5e6694533f6fc9753559012

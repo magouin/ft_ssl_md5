@@ -127,6 +127,7 @@ void	functions (t_params *params, t_fghi function, uint n) //ABCD
 
 	*a = *b + cshift((*a + function(*b, *c, *d)
 		+ (params->x)[params->k] + params->t[params->i]), params->s);
+	printf("{\n\tf = %x\n\tg = %x\n\n\tA = %x\n\tB = %x\n\tC = %x\n\tD = %x\n}\n", function(*b, *c, *d), params->k, *a, *b, *c, *d);
 }
 
 // M[] = words du message
@@ -250,41 +251,42 @@ char	*compute_md5(void *original_file, int64_t original_file_size)
 		buffer_save[2] = params.buffer[2];
 		buffer_save[3] = params.buffer[3];
 
-		// stage1(&params, nbr_du_milieu);
-		// stage2(&params, nbr_du_milieu);
-		// stage3(&params, nbr_du_milieu);
-		// stage4(&params, nbr_du_milieu);
+		stage1(&params, nbr_du_milieu);
+		stage2(&params, nbr_du_milieu);
+		stage3(&params, nbr_du_milieu);
+		stage4(&params, nbr_du_milieu);
 
-		i = 0;
-		while (i <= 63)
-		{
-			if (i <= 15)
-			{
-				f = (buffer_save[1] & buffer_save[2]) | ((~buffer_save[1]) & buffer_save[3]);
-				g = i;
-			}
-			else if (16 <= i && i <= 31)
-			{
-				f = (buffer_save[3] && buffer_save[1]) | ((~buffer_save[3]) & buffer_save[2]);
-				g = (5 * i + 1) % 16;
-			}
-			else if (32 <= i && i <= 47)
-			{
-				f = buffer_save[1] ^ buffer_save[2] ^ buffer_save[3];
-				g = (3 * i + 5) % 16;
-			}
-			else if (48 <= i && i <= 63)
-			{
-				f = buffer_save[2] ^ (buffer_save[1] | (~buffer_save[3]));
-				g = (7 * i) % 16;
-			}
-			temp = buffer_save[3];
-			buffer_save[3] = buffer_save[2];
-			buffer_save[2] = buffer_save[1];
-			buffer_save[1] = cshift(buffer_save[0] + f + (params.t)[i + 1] + params.x[g], nbr_du_milieu[i / 16][i % 4]) + buffer_save[1];
-			buffer_save[0] = temp;
-			i++;
-		}
+		// i = 0;
+		// while (i <= 63)
+		// {
+		// 	if (i <= 15)
+		// 	{
+		// 		f = (buffer_save[1] & buffer_save[2]) | ((~buffer_save[1]) & buffer_save[3]);
+		// 		g = i;
+		// 	}
+		// 	else if (16 <= i && i <= 31)
+		// 	{
+		// 		f = (buffer_save[3] && buffer_save[1]) | ((~buffer_save[3]) & buffer_save[2]);
+		// 		g = (5 * i + 1) % 16;
+		// 	}
+		// 	else if (32 <= i && i <= 47)
+		// 	{
+		// 		f = buffer_save[1] ^ buffer_save[2] ^ buffer_save[3];
+		// 		g = (3 * i + 5) % 16;
+		// 	}
+		// 	else if (48 <= i && i <= 63)
+		// 	{
+		// 		f = buffer_save[2] ^ (buffer_save[1] | (~buffer_save[3]));
+		// 		g = (7 * i) % 16;
+		// 	}
+		// 	temp = buffer_save[3];
+		// 	buffer_save[3] = buffer_save[2];
+		// 	buffer_save[2] = buffer_save[1];
+		// 	buffer_save[1] = cshift(buffer_save[0] + f + (params.t)[i + 1] + params.x[g], nbr_du_milieu[i / 16][i % 4]) + buffer_save[1];
+		// 	buffer_save[0] = temp;
+		// 	i++;
+		// 	printf("{\n\ti = %x\n\tf = %x\n\tg = %x\n\n\tA = %x\n\tB = %x\n\tC = %x\n\tD = %x\n}\n", i, f, g, buffer_save[3], buffer_save[2], buffer_save[1], buffer_save[0]);
+		// }
 
 
 		params.buffer[0] = (uint)params.buffer[0] + (uint)buffer_save[0];
