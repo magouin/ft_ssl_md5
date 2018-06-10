@@ -17,58 +17,6 @@ uint64_t end_conv_64(uint64_t nbr)
 	return (uint64_t)(((uint64_t)(end_conv_32(nbr >> 32)) << 32) | ((end_conv_32((uint)nbr))) );
 }
 
-void	*memjoin_af1(void *m1, size_t s1, const void *m2, size_t s2)
-{
-	void *ret;
-
-	if (!(ret = malloc(s1 + s2)))
-		return NULL;
-	ft_memcpy(ret, m1, s1);
-	free(m1);
-	ft_memcpy(ret + s1, m2, s2);
-	return (ret);
-}
-
-void    *read_file(char *filename, size_t *file_size)
-{
-	char		buffer[32];
-	int		fd;
-	ssize_t	r;
-	void		*ret;
-	size_t	size;
-
-	size = 0;
-	ret = malloc(1);
-	*(char*)ret = '\0';
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-	{
-		ft_putstr_fd("Can't open file for reading\n", 2);
-		free (ret);
-		return (NULL);
-	}
-	while ((r = read(fd, buffer, 32)))
-	{
-		if (r < 0)
-		{
-			close(fd);
-			free(ret);
-			ft_putstr_fd("Read error\n", 2);
-			return NULL;
-		}
-		if (!(ret = memjoin_af1(ret, size, buffer, r)))
-		{
-			close(fd);
-			ft_putstr_fd("Allocation error\n", 2);
-			return (NULL);
-		}
-		size += r;
-	}
-	close(fd);
-	*file_size = size;
-	return (ret);
-}
-
 uint	f(uint b, uint c, uint d)
 {
 	 return ((b & c) | ((~b) & d));
@@ -120,14 +68,14 @@ void	functions (t_params *params, t_fghi function, uint n) //ABCD
 	uint	*c;
 	uint	*d;
 
-	a = params->buffer + (0 + n) % 4;
-	b = params->buffer + (1 + n) % 4;
-	c = params->buffer + (2 + n) % 4;
-	d = params->buffer + (3 + n) % 4;
+	a = params->buffer + (4 - n) % 4;
+	b = params->buffer + (5 - n) % 4;
+	c = params->buffer + (6 - n) % 4;
+	d = params->buffer + (7 - n) % 4;
 
 	*a = *b + cshift((*a + function(*b, *c, *d)
 		+ (params->x)[params->k] + params->t[params->i]), params->s);
-	printf("{\n\tf = %x\n\tg = %x\n\n\tA = %x\n\tB = %x\n\tC = %x\n\tD = %x\n}\n", function(*b, *c, *d), params->k, *a, *b, *c, *d);
+	printf("{\n\t%c%c%c%c\n\tf = %x\n\tg = %x\n\n\tA = %x\n\tB = %x\n\tC = %x\n\tD = %x\n}\n", (char)((a - params->buffer) + 'A'), (char)((b - params->buffer) + 'A'), (char)((c - params->buffer) + 'A'), (char)((d - params->buffer) + 'A'), function(*b, *c, *d), params->k, *a, *b, *c, *d);
 }
 
 // M[] = words du message
@@ -256,46 +204,13 @@ char	*compute_md5(void *original_file, int64_t original_file_size)
 		stage3(&params, nbr_du_milieu);
 		stage4(&params, nbr_du_milieu);
 
-		// i = 0;
-		// while (i <= 63)
-		// {
-		// 	if (i <= 15)
-		// 	{
-		// 		f = (buffer_save[1] & buffer_save[2]) | ((~buffer_save[1]) & buffer_save[3]);
-		// 		g = i;
-		// 	}
-		// 	else if (16 <= i && i <= 31)
-		// 	{
-		// 		f = (buffer_save[3] && buffer_save[1]) | ((~buffer_save[3]) & buffer_save[2]);
-		// 		g = (5 * i + 1) % 16;
-		// 	}
-		// 	else if (32 <= i && i <= 47)
-		// 	{
-		// 		f = buffer_save[1] ^ buffer_save[2] ^ buffer_save[3];
-		// 		g = (3 * i + 5) % 16;
-		// 	}
-		// 	else if (48 <= i && i <= 63)
-		// 	{
-		// 		f = buffer_save[2] ^ (buffer_save[1] | (~buffer_save[3]));
-		// 		g = (7 * i) % 16;
-		// 	}
-		// 	temp = buffer_save[3];
-		// 	buffer_save[3] = buffer_save[2];
-		// 	buffer_save[2] = buffer_save[1];
-		// 	buffer_save[1] = cshift(buffer_save[0] + f + (params.t)[i + 1] + params.x[g], nbr_du_milieu[i / 16][i % 4]) + buffer_save[1];
-		// 	buffer_save[0] = temp;
-		// 	i++;
-		// 	printf("{\n\ti = %x\n\tf = %x\n\tg = %x\n\n\tA = %x\n\tB = %x\n\tC = %x\n\tD = %x\n}\n", i, f, g, buffer_save[3], buffer_save[2], buffer_save[1], buffer_save[0]);
-		// }
-
-
 		params.buffer[0] = (uint)params.buffer[0] + (uint)buffer_save[0];
 		params.buffer[1] = (uint)params.buffer[1] + (uint)buffer_save[1];
 		params.buffer[2] = (uint)params.buffer[2] + (uint)buffer_save[2];
 		params.buffer[3] = (uint)params.buffer[3] + (uint)buffer_save[3];
 		tour++;
 	}
-	printf("%x%x%x%x\n", params.buffer[0], params.buffer[1], params.buffer[2], params.buffer[3]);
+	printf("%08x%08x%08x%08x\n", end_conv_32(params.buffer[0]), end_conv_32(params.buffer[1]), end_conv_32(params.buffer[2]), end_conv_32(params.buffer[3]));
 	return file;
 }
 

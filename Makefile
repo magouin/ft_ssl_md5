@@ -1,5 +1,6 @@
 SRC_NAME = main.c \
-		print_memory.c
+		print_memory.c \
+		parsing.c
 
 OBJ_PATH = ./obj/
 

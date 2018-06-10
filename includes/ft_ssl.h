@@ -27,4 +27,6 @@ typedef void (*t_f1234) (t_params*, t_fghi);
 
 void print_memory(char *start, size_t size);
 
+void    *read_file(char *filename, size_t *file_size);
+
 #endif
