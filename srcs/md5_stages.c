@@ -12,7 +12,7 @@
 
 #include <ft_ssl.h>
 
-void	functions(t_params *params, t_fghi function, uint n)
+void	functions(t_params_md5 *params, t_fghi function, uint n)
 {
 	uint	*a;
 	uint	*b;
@@ -27,7 +27,7 @@ void	functions(t_params *params, t_fghi function, uint n)
 		+ (params->x)[params->k] + params->t[params->i]), params->s);
 }
 
-void	stage1(t_params *params, char nbr_du_milieu[4][4])
+void	stage1(t_params_md5 *params, char nbr_du_milieu[4][4])
 {
 	uint	i;
 
@@ -42,7 +42,7 @@ void	stage1(t_params *params, char nbr_du_milieu[4][4])
 	}
 }
 
-void	stage2(t_params *params, char nbr_du_milieu[4][4])
+void	stage2(t_params_md5 *params, char nbr_du_milieu[4][4])
 {
 	uint	i;
 
@@ -58,7 +58,7 @@ void	stage2(t_params *params, char nbr_du_milieu[4][4])
 	}
 }
 
-void	stage3(t_params *params, char nbr_du_milieu[4][4])
+void	stage3(t_params_md5 *params, char nbr_du_milieu[4][4])
 {
 	uint	i;
 
@@ -74,7 +74,7 @@ void	stage3(t_params *params, char nbr_du_milieu[4][4])
 	}
 }
 
-void	stage4(t_params *params, char nbr_du_milieu[4][4])
+void	stage4(t_params_md5 *params, char nbr_du_milieu[4][4])
 {
 	uint	j;
 

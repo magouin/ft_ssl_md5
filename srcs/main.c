@@ -12,7 +12,7 @@ uint	end_conv_32(uint nbr)
 		((nbr & 0xFF00) << 8) | (nbr << 24));
 }
 
-void	compute_buffer(t_params *params, char nbr_du_milieu[4][4], void *buffer)
+void	compute_buffer(t_params_md5 *params, char nbr_du_milieu[4][4], void *buffer)
 {
 	uint	buffer_save[4];
 
@@ -35,7 +35,8 @@ int		main(int argc, char **argv)
 		ft_putstr_fd("Usage : not like this\n", 2);
 		return (1);
 	}
-	if (!read_file(argv[1]))
-		return (2);
-	return (0);
+	return (main_256(argc, argv));
+	// if (!read_file(argv[1]))
+	// 	return (2);
+	// return (0);
 }
