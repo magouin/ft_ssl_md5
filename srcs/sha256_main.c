@@ -1,5 +1,19 @@
 #include <ft_ssl.h>
 
+int		sha256_padd_buffer(int original_file_size, int r, char *buffer)
+{
+	size_t	size;
+
+	original_file_size += r;
+	size = (r / 64 + 1) * 64;
+	if (size - r <= 8)
+		size += 64;
+	((uint8_t*)buffer)[r] = 0x80;
+	ft_bzero(buffer + r + 1, size - r - 8 - 1);
+	*(uint64_t*)(buffer + size - 8) = end_conv_64(original_file_size << 3);
+	return (size);
+}
+
 void	init_constants(uint32_t k[64], uint32_t h[8], uint32_t schedule[64], uint32_t working[8])
 {
 	ft_memcpy(k, (uint32_t[64]){0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
@@ -55,6 +69,7 @@ int		read_file_sha256(char *filename, t_params_sha256 *params)
 
 	if (!ft_init_sha256(&original_file_size, &fd, filename))
 		return (0);
+	printf("here !\n");
 
 	while ((r = read(fd, buffer, 8192)) || original_file_size == 0)
 	{
@@ -65,7 +80,7 @@ int		read_file_sha256(char *filename, t_params_sha256 *params)
 			return (0);
 		}
 		if (r < 8192)
-			r = padd_buffer(original_file_size, r, buffer);
+			r = sha256_padd_buffer(original_file_size, r, buffer);
 		hash_buffer_sha256(r, params, buffer);
 		original_file_size += r;
 	}

@@ -7,7 +7,7 @@ void	prepare_schedule(t_params_sha256 *params, void *buffer)
 	i = 0;
 	while (i <= 15)
 	{
-		params->schedule[i] = ((uint32_t*)buffer)[i];
+		params->schedule[i] = end_conv_32(((uint32_t*)buffer)[i]);
 		i++;
 	}
 	while (i <= 63)
@@ -48,9 +48,16 @@ void	sha256_compute_buffer(t_params_sha256 *params, void *buffer)
 	t = 0;
 	while (t < 64)
 	{
+		printf("e : %08x - f : %08x - g : %08x - ", working[4], working[5], working[6]);
+		uint32_t a1 = gs1(working[4]);
+		uint32_t a2 = ch(working[4], working[5], working[6]);
+		printf("gs1 : %08x - ch1 : %08x", a1, a2);
+
 		t1 = working[7] + gs1(working[4]) +
-			ch(working[4], working[5], working[6]) + params->schedule[t];
+			ch(working[4], working[5], working[6]) + params->k[t] + params->schedule[t];
+		printf("t1 : %08x\n", t1);
 		t2 = gs0(working[0]) + maj(working[0], working[1], working[2]);
+
 		working[7] = working[6]; // h = g
 		working[6] = working[5]; // g = f
 		working[5] = working[4]; // f = e

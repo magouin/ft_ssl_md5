@@ -6,12 +6,6 @@ uint	cshift(uint nbr, uint s)
 		(((nbr) & ((-1u) << (32 - (s)))) >> (32 - (s))));
 }
 
-uint	end_conv_32(uint nbr)
-{
-	return (uint)((nbr >> 24) | ((nbr & 0xFF0000) >> 8) |
-		((nbr & 0xFF00) << 8) | (nbr << 24));
-}
-
 void	compute_buffer(t_params_md5 *params, char nbr_du_milieu[4][4], void *buffer)
 {
 	uint	buffer_save[4];

@@ -49,3 +49,13 @@ void	print_result_64(uint buffer[4])
 	write(1, buff, 65);
 }
 
+uint	end_conv_32(uint nbr)
+{
+	return (uint)((nbr >> 24) | ((nbr & 0xFF0000) >> 8) |
+		((nbr & 0xFF00) << 8) | (nbr << 24));
+}
+
+uint64_t	end_conv_64(uint64_t nbr)
+{
+	return ((uint64_t)end_conv_32(nbr & -1) << 32 | end_conv_32(nbr >> 32));
+}
