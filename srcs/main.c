@@ -24,13 +24,20 @@ void	compute_buffer(t_params_md5 *params, char nbr_du_milieu[4][4], void *buffer
 
 int		main(int argc, char **argv)
 {
-	if (argc != 2)
+	if (argc == 1)
 	{
 		ft_putstr_fd("Usage : not like this\n", 2);
 		return (1);
 	}
-	return (main_256(argc, argv));
-	// if (!read_file(argv[1]))
-	// 	return (2);
-	// return (0);
+	if (ft_strequ(argv[1], "md5"))
+		return (main_md5(argc, argv));
+	else if (ft_strequ(argv[1], "sha256"))
+		return (main_256(argc, argv));
+	else
+	{
+		ft_putstr_fd("Unknown algorithm: ", 2);
+		ft_putstr_fd(argv[1], 2);
+		ft_putstr_fd("\n", 2);
+		return (2);
+	}
 }

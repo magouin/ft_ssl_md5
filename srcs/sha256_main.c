@@ -86,7 +86,17 @@ int		read_file_sha256(char *filename, t_params_sha256 *params)
 	close(fd);
 	return (1);
 }
-
+// 
+// char	get_params(char **av)
+// {
+// 	int i;
+//
+// 	i = 0;
+// 	while (av[i])
+// 	{
+// 		if (av[i][0] ==
+// 	}
+// }
 
 int main_256(int ac, char **av)
 {
@@ -96,13 +106,15 @@ int main_256(int ac, char **av)
 	uint32_t	working[8];
 	t_params_sha256	params;
 
+	if (ac < 3)
+		return (1);
 	init_constants(k, h, schedule, working);
 	params.k = k;
 	params.h = h;
 	params.schedule = schedule;
 	params.working = working;
 
-	read_file_sha256(av[1], &params);
+	read_file_sha256(av[2], &params);
 
 	return (0);
 }

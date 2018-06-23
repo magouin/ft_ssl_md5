@@ -54,6 +54,7 @@ uint			end_conv_32(uint nbr);
 void			initialize_buffer(uint *buffer);
 void			initialize_t(uint t[65]);
 
+int	main_md5(int argc, char **argv);
 
 /*
 	SHA-256

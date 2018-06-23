@@ -1,9 +1,10 @@
 SRC_NAME = main.c \
+		md5_main.c \
+		sha256_main.c \
 		md5_parsing.c \
 		md5_stages.c \
 		md5_fghi.c \
 		md5_init.c \
-		sha256_main.c \
 		general_operations.c \
 		sha256_functions.c \
 		sha256_compute_buffer.c
@@ -17,8 +18,8 @@ SRC_PATH = ./srcs/
 NAME = ft_ssl
 
 CC = gcc
-CFLAGS =  -Wextra -Wall -g
-# CFLAGS =  -Wextra -Wall -Werror -g
+# CFLAGS =  -Wextra -Wall -g
+CFLAGS =  -Wextra -Wall -Werror -g
 LFLAGS = -lft
 LIB_DIR=./lib/
 
