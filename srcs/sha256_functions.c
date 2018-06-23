@@ -2,7 +2,7 @@
 
 uint32_t	ch(uint32_t x, uint32_t y, uint32_t z)
 {
-	return ((x & y) ^ (x & z));
+	return ((x & y) ^ ((~x) & z));
 }
 
 uint32_t	maj(uint32_t x, uint32_t y, uint32_t z)

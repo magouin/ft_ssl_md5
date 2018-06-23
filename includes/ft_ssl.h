@@ -80,7 +80,7 @@ uint32_t		ps0(uint32_t x);
 uint32_t		ps1(uint32_t x);
 
 void			sha256_compute_buffer(t_params_sha256 *params, void *buffer);
-void			print_result_64(uint buffer[4]);
+void			print_result_64(unsigned char buffer[32]);
 uint64_t		end_conv_64(uint64_t nbr);
 
 

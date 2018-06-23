@@ -25,9 +25,9 @@ void	init_constants(uint32_t k[64], uint32_t h[8], uint32_t schedule[64], uint32
 		0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
 		0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624,
 		0xf40e3585, 0x106aa070, 0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5,
-		0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3, 0x748f82ee, 0x78a5636f, 
+		0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3, 0x748f82ee, 0x78a5636f,
 		0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2}
-		, 32 * sizeof(uint32_t));
+		, 64 * sizeof(uint32_t));
 
 	ft_memcpy(h, (uint32_t[8]){0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
 	0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19}, 8 * sizeof(uint32_t));
@@ -69,8 +69,6 @@ int		read_file_sha256(char *filename, t_params_sha256 *params)
 
 	if (!ft_init_sha256(&original_file_size, &fd, filename))
 		return (0);
-	printf("here !\n");
-
 	while ((r = read(fd, buffer, 8192)) || original_file_size == 0)
 	{
 		if (r < 0)
@@ -84,7 +82,7 @@ int		read_file_sha256(char *filename, t_params_sha256 *params)
 		hash_buffer_sha256(r, params, buffer);
 		original_file_size += r;
 	}
-	print_result_64(params->h);
+	print_result_64((unsigned char *)params->h);
 	close(fd);
 	return (1);
 }
@@ -96,7 +94,6 @@ int main_256(int ac, char **av)
 	uint32_t	h[8];
 	uint32_t	schedule[64];
 	uint32_t	working[8];
-
 	t_params_sha256	params;
 
 	init_constants(k, h, schedule, working);
