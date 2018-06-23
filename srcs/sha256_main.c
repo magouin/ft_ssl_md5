@@ -86,6 +86,7 @@ int		read_file_sha256(char *filename, t_params_sha256 *params)
 	close(fd);
 	return (1);
 }
+
 // 
 // char	get_params(char **av)
 // {
