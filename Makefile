@@ -7,7 +7,8 @@ SRC_NAME = main.c \
 		md5_init.c \
 		general_operations.c \
 		sha256_functions.c \
-		sha256_compute_buffer.c
+		sha256_compute_buffer.c \
+		parsing.c
 
 OBJ_PATH = ./obj/
 

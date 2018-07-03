@@ -31,15 +31,6 @@ int		main(int argc, char **argv)
 		ft_putstr_fd("Usage : not like this\n", 2);
 		return (1);
 	}
-	if (ft_strequ(argv[1], "md5"))
-		return (main_md5(argc, argv));
-	else if (ft_strequ(argv[1], "sha256"))
-		return (main_256(argc, argv, &opt));
-	else
-	{
-		ft_putstr_fd("Unknown algorithm: ", 2);
-		ft_putstr_fd(argv[1], 2);
-		ft_putstr_fd("\n", 2);
+	if (!parse_options(argc, argv, &opt))
 		return (2);
-	}
 }

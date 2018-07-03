@@ -27,6 +27,9 @@ uint32_t	rotl(uint32_t n, uint32_t x);
 uint32_t	rotr(uint32_t n, uint32_t x);
 void		print_result_32(uint buffer[4]);
 
+int			parse_options(int ac, char **av, t_opt *opt);
+
+
 
 /*
 	MD5
@@ -68,7 +71,7 @@ void			initialize_t(uint t[65]);
 
 
 
-int	main_md5(int argc, char **argv);
+int	main_md5(t_opt *opt);
 
 /*
 	SHA-256
@@ -84,9 +87,7 @@ typedef struct	s_params_sha256
 }				t_params_sha256;
 
 
-
-
-int				main_256(int ac, char **av, t_opt *opt);
+int				main_256(t_opt *opt);
 uint32_t		ch(uint32_t x, uint32_t y, uint32_t z);
 uint32_t		maj(uint32_t x, uint32_t y, uint32_t z);
 uint32_t		gs0(uint32_t x);

@@ -1,11 +1,25 @@
 #include <ft_ssl.h>
 
-int	main_md5(int argc, char **argv)
+static void print_opt(t_opt *opt)
 {
-	if (argc >= 3)
+	int	i;
+
+	i = 0;
+	while (i < 4)
 	{
-		if (!read_file(argv[2]))
-			return (2);
+		if (opt->flags & (1 << i))
+			printf("option -%c enabled.\n", 'p' + i);
+		i++;
 	}
-	return (0);
+	printf("content : [%s]\n", opt->content);
+}
+
+int	main_md5(t_opt *opt)
+{
+	print_opt(opt);
+	if (opt->flags & S_OPT)
+		compute_from_string_md5(opt->content);
+	else
+		read_file(opt->content);
+	return (1);
 }

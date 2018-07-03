@@ -104,7 +104,7 @@ int		read_file_sha256(char *filename, t_params_sha256 *params)
 	return (1);
 }
 
-int main_256(int ac, char **av, t_opt *opt)
+int main_256(t_opt *opt)
 {
 	uint32_t	k[64];
 	uint32_t	h[8];
@@ -112,8 +112,6 @@ int main_256(int ac, char **av, t_opt *opt)
 	uint32_t	working[8];
 	t_params_sha256	params;
 
-	if (ac < 3)
-		return (1);
 	init_constants(k, h, schedule, working);
 	params.k = k;
 	params.h = h;
@@ -123,9 +121,7 @@ int main_256(int ac, char **av, t_opt *opt)
 	if (opt->flags & S_OPT)
 		compute_from_string(opt->content, &params);
 	else
-		// read_file_sha256(opt->content, &params);
-		compute_from_string(av[2], &params);
-
+		read_file_sha256(opt->content, &params);
 
 	return (0);
 }
