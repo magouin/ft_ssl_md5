@@ -5,6 +5,7 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <math.h>
+# include <stdio.h>
 
 /*
 	General
@@ -42,6 +43,7 @@ void			stage4(t_params_md5 *params, char nbr_du_milieu[4][4]);
 
 void			compute_buffer(t_params_md5 *params, char nbr_du_milieu[4][4],
 	void *buffer);
+int				compute_from_string(char *str);
 
 uint			f(uint b, uint c, uint d);
 uint			g(uint b, uint c, uint d);
@@ -53,6 +55,8 @@ uint			end_conv_32(uint nbr);
 
 void			initialize_buffer(uint *buffer);
 void			initialize_t(uint t[65]);
+
+
 
 int	main_md5(int argc, char **argv);
 
@@ -83,6 +87,5 @@ uint32_t		ps1(uint32_t x);
 void			sha256_compute_buffer(t_params_sha256 *params, void *buffer);
 void			print_result_64(unsigned char buffer[32]);
 uint64_t		end_conv_64(uint64_t nbr);
-
 
 #endif

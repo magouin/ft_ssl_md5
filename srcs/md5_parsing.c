@@ -43,6 +43,25 @@ int		ft_init(t_params_md5 *params, size_t *original_file_size,
 	return (1);
 }
 
+int		compute_from_string(char *str)
+{
+	size_t	original_len;
+	size_t	end_len;
+	void	*buffer;
+	t_params_md5	params;
+
+	initialize_buffer(params.buffer);
+	initialize_t(params.t);
+	original_len = ft_strlen(str);
+	if (!(buffer = malloc((original_len + 64) * sizeof(char))))
+		return (0);
+	ft_strcpy(buffer, str);
+	end_len = padd_buffer(0, original_len, buffer);
+	hash_buffer_md5(end_len, &params, buffer);
+	print_result_32(params.buffer);
+	free(buffer);
+	return (1);
+}
 
 int		read_file(char *filename)
 {
