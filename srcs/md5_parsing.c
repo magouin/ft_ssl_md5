@@ -43,7 +43,7 @@ int		ft_init(t_params_md5 *params, size_t *original_file_size,
 	return (1);
 }
 
-int		compute_from_string(char *str)
+int		compute_from_string_md5(char *str)
 {
 	size_t	original_len;
 	size_t	end_len;

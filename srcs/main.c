@@ -24,6 +24,8 @@ void	compute_buffer(t_params_md5 *params, char nbr_du_milieu[4][4], void *buffer
 
 int		main(int argc, char **argv)
 {
+	t_opt	opt;
+
 	if (argc == 1)
 	{
 		ft_putstr_fd("Usage : not like this\n", 2);
@@ -32,7 +34,7 @@ int		main(int argc, char **argv)
 	if (ft_strequ(argv[1], "md5"))
 		return (main_md5(argc, argv));
 	else if (ft_strequ(argv[1], "sha256"))
-		return (main_256(argc, argv));
+		return (main_256(argc, argv, &opt));
 	else
 	{
 		ft_putstr_fd("Unknown algorithm: ", 2);

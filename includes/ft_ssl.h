@@ -7,9 +7,20 @@
 # include <math.h>
 # include <stdio.h>
 
+# define P_OPT	1
+# define Q_OPT	2
+# define R_OPT	4
+# define S_OPT	8
+
 /*
 	General
 */
+
+typedef struct	s_opt
+{
+	int8_t		flags;
+	char		*content; // File or string depending
+}				t_opt;
 
 int			padd_buffer(int original_file_size, int r, char *buffer);
 uint32_t	rotl(uint32_t n, uint32_t x);
@@ -32,7 +43,6 @@ typedef struct	s_params_md5
 }				t_params_md5;
 
 typedef uint	(*t_fghi) (uint, uint, uint);
-typedef void	(*t_f1234) (t_params_md5*, t_fghi);
 
 int				read_file(char *filename);
 
@@ -43,7 +53,7 @@ void			stage4(t_params_md5 *params, char nbr_du_milieu[4][4]);
 
 void			compute_buffer(t_params_md5 *params, char nbr_du_milieu[4][4],
 	void *buffer);
-int				compute_from_string(char *str);
+int				compute_from_string_md5(char *str);
 
 uint			f(uint b, uint c, uint d);
 uint			g(uint b, uint c, uint d);
@@ -76,7 +86,7 @@ typedef struct	s_params_sha256
 
 
 
-int				main_256(int ac, char **av);
+int				main_256(int ac, char **av, t_opt *opt);
 uint32_t		ch(uint32_t x, uint32_t y, uint32_t z);
 uint32_t		maj(uint32_t x, uint32_t y, uint32_t z);
 uint32_t		gs0(uint32_t x);
