@@ -34,12 +34,17 @@ int		ft_init(t_params_md5 *params, size_t *original_file_size,
 	initialize_buffer(params->buffer);
 	initialize_t(params->t);
 	*original_file_size = 0;
-	*fd = open(filename, O_RDONLY);
-	if (*fd < 0)
+	if (filename)
 	{
-		ft_putstr_fd("Can't open file for reading\n", 2);
-		return (0);
+		*fd = open(filename, O_RDONLY);
+		if (*fd < 0)
+		{
+			ft_putstr_fd("Can't open file for reading\n", 2);
+			return (0);
+		}
 	}
+	else
+		*fd = 0;
 	return (1);
 }
 

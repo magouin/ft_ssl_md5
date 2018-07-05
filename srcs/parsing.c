@@ -3,10 +3,8 @@
 static int	get_option(char *option, t_opt *opt)
 {
 	int	i;
-	int	tmp;
 
 	i = 1;
-	tmp = 1;
 	while (option[i])
 	{
 		if (option[i] >= 'p' && option[i] <= 's')
@@ -19,32 +17,40 @@ static int	get_option(char *option, t_opt *opt)
 			return (0);
 		}
 		if (opt->flags & S_OPT)
-			tmp = 2;
+		{
+			if (option[i + 1] == '\0')
+				opt->content = NULL;
+			else
+				opt->content = option + i + 1;
+			return (1);
+		}
 		i++;
 	}
-	return (tmp);
+	return (1);
 }
 
 static int	do_parsing(char **av, t_opt *opt, int (*fun) (t_opt*))
 {
 	int	i;
-	int	x;
 
 	i = 2;
 	while (av[i])
 	{
 		if (av[i][0] == '-')
 		{
-			if ((x = get_option(av[i], opt)) == 0)
+			if (!get_option(av[i], opt))
 				return (0);
-			else if (x == 2)
+			if (opt->flags & S_OPT)
 			{
-				if (!av[i + 1])
-					return (0);
-				opt->content = av[i + 1];
+				if (!opt->content)
+				{
+					if (!av[i + 1])
+						return (0);
+					opt->content = av[i + 1];
+					i++;
+				}
 				fun(opt);
 				opt->flags &= ~S_OPT;
-				i++;
 			}
 		}
 		else
@@ -54,6 +60,8 @@ static int	do_parsing(char **av, t_opt *opt, int (*fun) (t_opt*))
 		}
 		i++;
 	}
+	if (opt->content == NULL)
+		fun(opt);
 	return (1);
 }
 
@@ -61,7 +69,7 @@ int	parse_options(int ac, char **av, t_opt *opt)
 {
 	int (*fun) (t_opt*);
 
-	if (ac < 3)
+	if (ac < 2)
 		return (0);
 	ft_bzero(opt, sizeof(t_opt));
 	if (ft_strequ(av[1], "md5"))

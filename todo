@@ -1,2 +1,11 @@
 Parsing options OK (Faudra check)
 Implementer les options
+
+Tester ./ft_ssl md5 -p -p
+
+OPTIONS
+
+-p : Lit str depuis l'entree standard, puis affiche hash(str) sans rien
+-sstr ou -s str : affiche hash(str) avec les messages
+-r:	Reverse tous les prochains affichages
+-q: Annule tous les prochains affichages
