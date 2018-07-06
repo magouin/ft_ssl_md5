@@ -70,21 +70,30 @@ int		compute_from_string_md5(char *str)
 
 int		read_file(char *filename)
 {
-	char		buffer[8192 + 64];
+	char			buffer[8192 + 64];
 	int			fd;
 	ssize_t		r;
 	size_t		original_file_size;
 	t_params_md5	params;
 
+	r = 1;
 	if (!ft_init(&params, &original_file_size, &fd, filename))
 		return (0);
-	while ((r = read(fd, buffer, 8192)) || original_file_size == 0)
+	while ((fd != -1) && ((r = read(fd, buffer, 8192)) || original_file_size == 0))
 	{
 		if (r < 0)
 		{
-			close(fd);
-			ft_putstr_fd("Read error\n", 2);
-			return (0);
+			if (fd == 0)
+			{
+				r = 0;
+				fd = -1;
+			}
+			else
+			{
+				close(fd);
+				ft_putstr_fd("Read error\n", 2);
+				return (0);
+			}
 		}
 		if (r < 8192)
 			r = padd_buffer(original_file_size, r, buffer);

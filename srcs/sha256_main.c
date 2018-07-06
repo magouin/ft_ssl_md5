@@ -39,7 +39,10 @@ void	init_constants(uint32_t k[64], uint32_t h[8], uint32_t schedule[64], uint32
 static int ft_init_sha256(size_t *original_file_size, int *fd, char *filename)
 {
 	*original_file_size = 0;
-	*fd = open(filename, O_RDONLY);
+	if (!filename)
+		*fd = 0;
+	else
+		*fd = open(filename, O_RDONLY);
 	if (*fd < 0)
 	{
 		ft_putstr_fd("Can't open file for reading\n", 2);
@@ -90,9 +93,14 @@ int		read_file_sha256(char *filename, t_params_sha256 *params)
 	{
 		if (r < 0)
 		{
-			close(fd);
-			ft_putstr_fd("Read error\n", 2);
-			return (0);
+			if (fd == 0)
+				r = 0;
+			else
+			{
+				close(fd);
+				ft_putstr_fd("Read error\n", 2);
+				return (0);
+			}
 		}
 		if (r < 8192)
 			r = sha256_padd_buffer(original_file_size, r, buffer);

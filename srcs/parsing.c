@@ -1,6 +1,6 @@
 #include <ft_ssl.h>
 
-static int	get_option(char *option, t_opt *opt)
+static int	get_option(char *option, t_opt *opt, int (*fun) (t_opt*))
 {
 	int	i;
 
@@ -24,6 +24,14 @@ static int	get_option(char *option, t_opt *opt)
 				opt->content = option + i + 1;
 			return (1);
 		}
+		else if (opt->flags & P_OPT)
+		{
+			fun(opt);
+			opt->flags &= ~P_OPT;
+			opt->has_read_something = opt->flags & R_OPT ? 0 : 1;
+		}
+		else if (opt->flags & R_OPT && opt->has_read_something)
+			opt->has_read_something = 0;
 		i++;
 	}
 	return (1);
@@ -38,7 +46,7 @@ static int	do_parsing(char **av, t_opt *opt, int (*fun) (t_opt*))
 	{
 		if (av[i][0] == '-')
 		{
-			if (!get_option(av[i], opt))
+			if (!get_option(av[i], opt, fun))
 				return (0);
 			if (opt->flags & S_OPT)
 			{
@@ -60,7 +68,7 @@ static int	do_parsing(char **av, t_opt *opt, int (*fun) (t_opt*))
 		}
 		i++;
 	}
-	if (opt->content == NULL)
+	if (opt->content == NULL && !opt->has_read_something)
 		fun(opt);
 	return (1);
 }

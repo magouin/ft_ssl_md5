@@ -20,6 +20,7 @@ typedef struct	s_opt
 {
 	int8_t		flags;
 	char		*content; // File or string depending
+	int			has_read_something;
 }				t_opt;
 
 int			padd_buffer(int original_file_size, int r, char *buffer);
