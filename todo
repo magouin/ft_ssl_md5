@@ -6,7 +6,7 @@ Tester ./ft_ssl md5 -p -p
 OPTIONS
 
 -p : Lit str depuis l'entree standard, puis affiche hash(str) sans rien
--sstr ou -s str : affiche hash(str) avec les messages
+-sstr ou -s str : affiche hash(str) avec les messages. Tous les autres parametres sont pris comme des fichiers
 -r:	Reverse tous les prochains affichages
 -q: Annule tous les prochains affichages
 
@@ -22,3 +22,6 @@ avec -r
 	2bis : "hash fichier"
 	3bis : 3
 	4bis : "hash "str""
+
+avec -q
+	1sec :
