@@ -6,7 +6,7 @@
 /*   By: jcamhi <jcamhi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 17:33:35 by jcamhi            #+#    #+#             */
-/*   Updated: 2018/07/08 18:55:07 by jcamhi           ###   ########.fr       */
+/*   Updated: 2018/07/08 19:04:16 by jcamhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ static void	print_info_64(t_opt *opt)
 	}
 }
 
-
 void		print_result_32(uint buffer[4], t_opt *opt)
 {
 	int		i;
@@ -117,15 +116,4 @@ void		print_result_64(unsigned char buffer[32], t_opt *opt)
 	if (opt->flags & R_OPT)
 		print_info_64(opt);
 	write(1, "\n", 1);
-}
-
-uint		end_conv_32(uint nbr)
-{
-	return (uint)((nbr >> 24) | ((nbr & 0xFF0000) >> 8) |
-		((nbr & 0xFF00) << 8) | (nbr << 24));
-}
-
-uint64_t	end_conv_64(uint64_t nbr)
-{
-	return ((uint64_t)end_conv_32(nbr & -1) << 32 | end_conv_32(nbr >> 32));
 }
