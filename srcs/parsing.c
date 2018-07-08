@@ -6,7 +6,7 @@
 /*   By: jcamhi <jcamhi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 17:56:45 by jcamhi            #+#    #+#             */
-/*   Updated: 2018/07/08 17:56:46 by jcamhi           ###   ########.fr       */
+/*   Updated: 2018/07/08 19:03:06 by jcamhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,13 @@ static int	handle_s_opt(t_opt *opt, int (*fun)(t_opt*), char **av, int *i)
 static int	do_parsing(char **av, t_opt *opt, int (*fun) (t_opt*))
 {
 	int	i;
+	int	ignore;
 
 	i = 2;
+	ignore = 0;
 	while (av[i])
 	{
-		if (av[i][0] == '-')
+		if (av[i][0] == '-' && !ignore)
 		{
 			if (!get_option(av[i], opt, fun))
 				return (0);
@@ -79,6 +81,7 @@ static int	do_parsing(char **av, t_opt *opt, int (*fun) (t_opt*))
 		{
 			opt->content = av[i];
 			fun(opt);
+			ignore = 1;
 		}
 		i++;
 	}
