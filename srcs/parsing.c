@@ -29,10 +29,7 @@ static int	get_option(char *option, t_opt *opt, int (*fun) (t_opt*))
 			opt->content = NULL;
 			fun(opt);
 			opt->flags &= ~P_OPT;
-			opt->has_read_something = opt->flags & R_OPT ? 0 : 1;
 		}
-		else if (opt->flags & R_OPT && opt->has_read_something)
-			opt->has_read_something = 0;
 		i++;
 	}
 	return (1);
@@ -60,7 +57,6 @@ static int	do_parsing(char **av, t_opt *opt, int (*fun) (t_opt*))
 				}
 				fun(opt);
 				opt->flags &= ~S_OPT;
-				opt->content = NULL;
 			}
 		}
 		else
@@ -70,7 +66,7 @@ static int	do_parsing(char **av, t_opt *opt, int (*fun) (t_opt*))
 		}
 		i++;
 	}
-	if (opt->content == NULL)
+	if (opt->content == NULL && !(av[2] && !av[3] && ft_strequ("-p", av[2])))
 		fun(opt);
 	return (1);
 }

@@ -30,6 +30,7 @@ avec -q
 Comportements étranges :
 
 	md5 -p -r != md5 -sa -r
+	md5 -q -p
 
 
 
