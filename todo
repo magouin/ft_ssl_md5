@@ -11,7 +11,6 @@ OPTIONS
 -q: Annule tous les prochains affichages
 
 Types de print :
-
 1 : md5 -> affiche juste le hash
 2 : md5 fichier -> affiche "MD5 (fichier) = hash"
 3 : md5 -p -> affiche l'entree standard, puis un \n, puis le hash
@@ -25,3 +24,18 @@ avec -r
 
 avec -q
 	1sec :
+
+
+
+Comportements étranges :
+
+	md5 -p -r != md5 -sa -r
+
+
+
+
+-p -> Lire entree standard
+-s -> Lis la suite des options ou l'argument suivant (-sq ou -s q)
+-r -> Reverse tous les prochains affichages
+-q -> Annule tous les prochains affichages
+Lis les fichiers suivant ou si aucune option s n'a ete fais lis l'entree standard
