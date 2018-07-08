@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sha256_compute_buffer.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcamhi <jcamhi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/07/08 17:40:59 by jcamhi            #+#    #+#             */
+/*   Updated: 2018/07/08 17:41:03 by jcamhi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <ft_ssl.h>
 
 void	prepare_schedule(t_params_sha256 *params, void *buffer)
@@ -12,7 +24,9 @@ void	prepare_schedule(t_params_sha256 *params, void *buffer)
 	}
 	while (i <= 63)
 	{
-		params->schedule[i] = ps1(params->schedule[i - 2]) + params->schedule[i - 7] + ps0(params->schedule[i - 15]) + params->schedule[i - 16];
+		params->schedule[i] = ps1(params->schedule[i - 2]) +
+					params->schedule[i - 7] +
+					ps0(params->schedule[i - 15]) + params->schedule[i - 16];
 		i++;
 	}
 }
@@ -24,7 +38,6 @@ void	compute_next_hash(t_params_sha256 *params)
 
 	h = params->h;
 	working = params->working;
-
 	h[0] += working[0];
 	h[1] += working[1];
 	h[2] += working[2];
@@ -48,8 +61,8 @@ void	sha256_compute_buffer(t_params_sha256 *params, void *buffer)
 	t = 0;
 	while (t < 64)
 	{
-		t1 = working[7] + gs1(working[4]) +
-			ch(working[4], working[5], working[6]) + params->k[t] + params->schedule[t];
+		t1 = working[7] + gs1(working[4]) + ch(working[4],
+			working[5], working[6]) + params->k[t] + params->schedule[t];
 		t2 = gs0(working[0]) + maj(working[0], working[1], working[2]);
 		working[7] = working[6];
 		working[6] = working[5];
@@ -59,7 +72,7 @@ void	sha256_compute_buffer(t_params_sha256 *params, void *buffer)
 		working[2] = working[1];
 		working[1] = working[0];
 		working[0] = t1 + t2;
- 		t++;
+		t++;
 	}
 	compute_next_hash(params);
 }

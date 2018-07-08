@@ -1,4 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcamhi <jcamhi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/07/08 17:56:45 by jcamhi            #+#    #+#             */
+/*   Updated: 2018/07/08 17:56:46 by jcamhi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <ft_ssl.h>
+
+static int	print_str_and_ret(char *str1, char c)
+{
+	ft_putstr_fd(str1, 2);
+	write(2, &c, 1);
+	ft_putstr_fd("\n", 2);
+	return (0);
+}
 
 static int	get_option(char *option, t_opt *opt, int (*fun) (t_opt*))
 {
@@ -10,18 +30,10 @@ static int	get_option(char *option, t_opt *opt, int (*fun) (t_opt*))
 		if (option[i] >= 'p' && option[i] <= 's')
 			opt->flags |= 1 << (option[i] - 'p');
 		else
-		{
-			ft_putstr_fd("Illegal option: ", 2);
-			write(2, option + i, 1);
-			ft_putstr_fd("\n", 2);
-			return (0);
-		}
+			return (print_str_and_ret("Illegal option: ", option[i]));
 		if (opt->flags & S_OPT)
 		{
-			if (option[i + 1] == '\0')
-				opt->content = NULL;
-			else
-				opt->content = option + i + 1;
+			opt->content = option[i + 1] == '\0' ? NULL : option + i + 1;
 			return (1);
 		}
 		else if (opt->flags & P_OPT)
@@ -32,6 +44,20 @@ static int	get_option(char *option, t_opt *opt, int (*fun) (t_opt*))
 		}
 		i++;
 	}
+	return (1);
+}
+
+static int	handle_s_opt(t_opt *opt, int (*fun)(t_opt*), char **av, int *i)
+{
+	if (!opt->content)
+	{
+		if (!av[*i + 1])
+			return (0);
+		opt->content = av[*i + 1];
+		(*i)++;
+	}
+	fun(opt);
+	opt->flags &= ~S_OPT;
 	return (1);
 }
 
@@ -46,18 +72,8 @@ static int	do_parsing(char **av, t_opt *opt, int (*fun) (t_opt*))
 		{
 			if (!get_option(av[i], opt, fun))
 				return (0);
-			if (opt->flags & S_OPT)
-			{
-				if (!opt->content)
-				{
-					if (!av[i + 1])
-						return (0);
-					opt->content = av[i + 1];
-					i++;
-				}
-				fun(opt);
-				opt->flags &= ~S_OPT;
-			}
+			if (opt->flags & S_OPT && handle_s_opt(opt, fun, av, &i) == 0)
+				return (0);
 		}
 		else
 		{
@@ -71,7 +87,7 @@ static int	do_parsing(char **av, t_opt *opt, int (*fun) (t_opt*))
 	return (1);
 }
 
-int	parse_options(int ac, char **av, t_opt *opt)
+int			parse_options(int ac, char **av, t_opt *opt)
 {
 	int (*fun) (t_opt*);
 
@@ -91,6 +107,5 @@ int	parse_options(int ac, char **av, t_opt *opt)
 	}
 	if (!do_parsing(av, opt, fun))
 		return (0);
-
 	return (1);
 }

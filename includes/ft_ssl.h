@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ssl.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcamhi <jcamhi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/07/08 17:59:15 by jcamhi            #+#    #+#             */
+/*   Updated: 2018/07/08 17:59:48 by jcamhi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_SSL_H
 # define FT_SSL_H
 
@@ -13,27 +25,25 @@
 # define S_OPT	8
 
 /*
-	General
+	** General
 */
 
 typedef struct	s_opt
 {
 	int8_t		flags;
-	char		*content; // File or string depending
+	char		*content;
 	int			has_read_something;
 }				t_opt;
 
-int			padd_buffer(int original_file_size, int r, char *buffer);
-uint32_t	rotl(uint32_t n, uint32_t x);
-uint32_t	rotr(uint32_t n, uint32_t x);
-void		print_result_32(uint buffer[4]);
+int				padd_buffer(int original_file_size, int r, char *buffer);
+uint32_t		rotl(uint32_t n, uint32_t x);
+uint32_t		rotr(uint32_t n, uint32_t x);
+void			print_result_32(uint buffer[4]);
 
-int			parse_options(int ac, char **av, t_opt *opt);
-
-
+int				parse_options(int ac, char **av, t_opt *opt);
 
 /*
-	MD5
+	** MD5
 */
 
 typedef struct	s_params_md5
@@ -70,14 +80,15 @@ uint			end_conv_32(uint nbr);
 void			initialize_buffer(uint *buffer);
 void			initialize_t(uint t[65]);
 
+void			hash_buffer_md5(ssize_t r, t_params_md5 *params, char *buffer);
+int				ft_init(t_params_md5 *params, size_t *original_file_size,
+		int *fd, char *filename);
 
-
-int	main_md5(t_opt *opt);
+int				main_md5(t_opt *opt);
 
 /*
-	SHA-256
+	** SHA-256
 */
-
 
 typedef struct	s_params_sha256
 {
@@ -86,7 +97,6 @@ typedef struct	s_params_sha256
 	uint32_t	*schedule;
 	uint32_t	*working;
 }				t_params_sha256;
-
 
 int				main_256(t_opt *opt);
 uint32_t		ch(uint32_t x, uint32_t y, uint32_t z);
@@ -99,5 +109,9 @@ uint32_t		ps1(uint32_t x);
 void			sha256_compute_buffer(t_params_sha256 *params, void *buffer);
 void			print_result_64(unsigned char buffer[32]);
 uint64_t		end_conv_64(uint64_t nbr);
+
+int				sha256_padd_buffer(int original_file_size, int r, char *buffer);
+void			init_constants(uint32_t k[64], uint32_t h[8],
+				uint32_t schedule[64], uint32_t working[8]);
 
 #endif

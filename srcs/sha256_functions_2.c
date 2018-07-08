@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   md5_init.c                                         :+:      :+:    :+:   */
+/*   sha256_functions_2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcamhi <jcamhi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/08 17:34:08 by jcamhi            #+#    #+#             */
-/*   Updated: 2018/07/08 17:34:08 by jcamhi           ###   ########.fr       */
+/*   Created: 2018/07/08 17:42:07 by jcamhi            #+#    #+#             */
+/*   Updated: 2018/07/08 17:42:07 by jcamhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ssl.h>
 
-void	initialize_buffer(uint *buffer)
+uint32_t	ps0(uint32_t x)
 {
-	buffer[0] = 0x67452301u;
-	buffer[1] = 0xefcdab89u;
-	buffer[2] = 0x98badcfeu;
-	buffer[3] = 0x10325476u;
+	return (rotr(7, x) ^ rotr(18, x) ^ (x >> 3));
 }
 
-void	initialize_t(uint t[65])
+uint32_t	ps1(uint32_t x)
 {
-	uint i;
-
-	i = 1;
-	while (i <= 64)
-	{
-		t[i] = 4294967296.0 * fabs(sin(i));
-		i++;
-	}
+	return (rotr(17, x) ^ rotr(19, x) ^ (x >> 10));
 }

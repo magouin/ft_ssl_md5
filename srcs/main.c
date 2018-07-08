@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcamhi <jcamhi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/07/08 17:33:55 by jcamhi            #+#    #+#             */
+/*   Updated: 2018/07/08 17:33:55 by jcamhi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <ft_ssl.h>
 
 uint	cshift(uint nbr, uint s)
@@ -6,7 +18,8 @@ uint	cshift(uint nbr, uint s)
 		(((nbr) & ((-1u) << (32 - (s)))) >> (32 - (s))));
 }
 
-void	compute_buffer(t_params_md5 *params, char nbr_du_milieu[4][4], void *buffer)
+void	compute_buffer(t_params_md5 *params, char nbr_du_milieu[4][4],
+	void *buffer)
 {
 	uint	buffer_save[4];
 

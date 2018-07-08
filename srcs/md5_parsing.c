@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   md5_parsing.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcamhi <jcamhi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/07/08 17:37:14 by jcamhi            #+#    #+#             */
+/*   Updated: 2018/07/08 17:39:18 by jcamhi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <ft_ssl.h>
 
 int		padd_buffer(int original_file_size, int r, char *buffer)
@@ -14,45 +26,11 @@ int		padd_buffer(int original_file_size, int r, char *buffer)
 	return (size);
 }
 
-void	hash_buffer_md5(ssize_t r, t_params_md5 *params, char *buffer)
-{
-	int			i;
-	static char	nbr_du_milieu[4][4] = {{7, 12, 17, 22},
-		{5, 9, 14, 20}, {4, 11, 16, 23}, {6, 10, 15, 21}};
-
-	i = 0;
-	while (i <= r / 64 - 1)
-	{
-		compute_buffer(params, nbr_du_milieu, buffer + i * 16 * sizeof(uint));
-		i++;
-	}
-}
-
-int		ft_init(t_params_md5 *params, size_t *original_file_size,
-		int *fd, char *filename)
-{
-	initialize_buffer(params->buffer);
-	initialize_t(params->t);
-	*original_file_size = 0;
-	if (filename)
-	{
-		*fd = open(filename, O_RDONLY);
-		if (*fd < 0)
-		{
-			ft_putstr_fd("Can't open file for reading\n", 2);
-			return (0);
-		}
-	}
-	else
-		*fd = 0;
-	return (1);
-}
-
 int		compute_from_string_md5(char *str)
 {
-	size_t	original_len;
-	size_t	end_len;
-	void	*buffer;
+	size_t			original_len;
+	size_t			end_len;
+	void			*buffer;
 	t_params_md5	params;
 
 	initialize_buffer(params.buffer);
@@ -68,33 +46,38 @@ int		compute_from_string_md5(char *str)
 	return (1);
 }
 
+int		if_r_smaller_than_zero(ssize_t *r, int *fd)
+{
+	if (fd == 0)
+	{
+		*r = 0;
+		*fd = -1;
+		return (1);
+	}
+	else
+	{
+		close(*fd);
+		ft_putstr_fd("Read error\n", 2);
+		return (0);
+	}
+}
+
 int		read_file(char *filename)
 {
 	char			buffer[8192 + 64];
-	int			fd;
-	ssize_t		r;
-	size_t		original_file_size;
+	int				fd;
+	ssize_t			r;
+	size_t			original_file_size;
 	t_params_md5	params;
 
 	r = 1;
 	if (!ft_init(&params, &original_file_size, &fd, filename))
 		return (0);
-	while ((fd != -1) && ((r = read(fd, buffer, 8192)) || original_file_size == 0))
+	while ((fd != -1) && ((r = read(fd, buffer, 8192))
+		|| original_file_size == 0))
 	{
-		if (r < 0)
-		{
-			if (fd == 0)
-			{
-				r = 0;
-				fd = -1;
-			}
-			else
-			{
-				close(fd);
-				ft_putstr_fd("Read error\n", 2);
-				return (0);
-			}
-		}
+		if (r < 0 && if_r_smaller_than_zero(&r, &fd) == 0)
+			return (0);
 		if (r < 8192)
 			r = padd_buffer(original_file_size, r, buffer);
 		hash_buffer_md5(r, &params, buffer);

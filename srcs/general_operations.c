@@ -1,17 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   general_operations.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcamhi <jcamhi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/07/08 17:33:35 by jcamhi            #+#    #+#             */
+/*   Updated: 2018/07/08 17:33:37 by jcamhi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <ft_ssl.h>
 
-uint32_t rotl(uint32_t n, uint32_t x)
-{
-	return ((x << n) | (x >> (32 - n)));
-}
-
-uint32_t rotr(uint32_t n, uint32_t x)
-{
-	return rotl(32 - n, x);
-}
-
-
-void	print_result_32(uint buffer[4])
+void		print_result_32(uint buffer[4])
 {
 	int		i;
 	char	buff[33];
@@ -30,7 +31,7 @@ void	print_result_32(uint buffer[4])
 	write(1, buff, 33);
 }
 
-void	print_result_64(unsigned char buffer[32])
+void		print_result_64(unsigned char buffer[32])
 {
 	int		i;
 	char	buff[65];
@@ -42,7 +43,6 @@ void	print_result_64(unsigned char buffer[32])
 			*(uint *)(buffer + i) = end_conv_32(*(uint *)(buffer + i));
 		buff[i * 2] = ((buffer[i] & 0xf0) >> 4) + '0';
 		buff[i * 2] > '9' ? buff[i * 2] = buff[i * 2] - '9' - 1 + 'a' : 0;
-
 		buff[i * 2 + 1] = (buffer[i] & 0xf) + '0';
 		buff[i * 2 + 1] > '9' ?
 			buff[i * 2 + 1] = buff[i * 2 + 1] - '9' - 1 + 'a' : 0;
@@ -52,7 +52,7 @@ void	print_result_64(unsigned char buffer[32])
 	write(1, buff, 65);
 }
 
-uint	end_conv_32(uint nbr)
+uint		end_conv_32(uint nbr)
 {
 	return (uint)((nbr >> 24) | ((nbr & 0xFF0000) >> 8) |
 		((nbr & 0xFF00) << 8) | (nbr << 24));
