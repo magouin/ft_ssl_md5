@@ -6,7 +6,7 @@
 /*   By: jcamhi <jcamhi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 17:59:15 by jcamhi            #+#    #+#             */
-/*   Updated: 2018/07/08 17:59:48 by jcamhi           ###   ########.fr       */
+/*   Updated: 2018/07/08 18:48:21 by jcamhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct	s_opt
 int				padd_buffer(int original_file_size, int r, char *buffer);
 uint32_t		rotl(uint32_t n, uint32_t x);
 uint32_t		rotr(uint32_t n, uint32_t x);
-void			print_result_32(uint buffer[4]);
+void			print_result_32(uint buffer[4], t_opt *opt);
 
 int				parse_options(int ac, char **av, t_opt *opt);
 
@@ -58,7 +58,7 @@ typedef struct	s_params_md5
 
 typedef uint	(*t_fghi) (uint, uint, uint);
 
-int				read_file(char *filename);
+int				read_file(char *filename, t_opt *opt);
 
 void			stage1(t_params_md5 *params, char nbr_du_milieu[4][4]);
 void			stage2(t_params_md5 *params, char nbr_du_milieu[4][4]);
@@ -67,7 +67,7 @@ void			stage4(t_params_md5 *params, char nbr_du_milieu[4][4]);
 
 void			compute_buffer(t_params_md5 *params, char nbr_du_milieu[4][4],
 	void *buffer);
-int				compute_from_string_md5(char *str);
+int				compute_from_string_md5(char *str, t_opt *opt);
 
 uint			f(uint b, uint c, uint d);
 uint			g(uint b, uint c, uint d);
@@ -107,7 +107,7 @@ uint32_t		ps0(uint32_t x);
 uint32_t		ps1(uint32_t x);
 
 void			sha256_compute_buffer(t_params_sha256 *params, void *buffer);
-void			print_result_64(unsigned char buffer[32]);
+void			print_result_64(unsigned char buffer[32], t_opt *opt);
 uint64_t		end_conv_64(uint64_t nbr);
 
 int				sha256_padd_buffer(int original_file_size, int r, char *buffer);

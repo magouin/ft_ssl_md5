@@ -6,7 +6,7 @@
 /*   By: jcamhi <jcamhi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 17:49:33 by jcamhi            #+#    #+#             */
-/*   Updated: 2018/07/08 17:50:17 by jcamhi           ###   ########.fr       */
+/*   Updated: 2018/07/08 18:58:43 by jcamhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		hash_buffer_sha256(ssize_t r, t_params_sha256 *params, void *buffer)
 	}
 }
 
-int			compute_from_string(char *str, t_params_sha256 *params)
+int			compute_from_string(char *str, t_params_sha256 *params, t_opt *opt)
 {
 	size_t	original_len;
 	size_t	end_len;
@@ -51,12 +51,12 @@ int			compute_from_string(char *str, t_params_sha256 *params)
 	ft_strcpy(buffer, str);
 	end_len = sha256_padd_buffer(0, original_len, buffer);
 	hash_buffer_sha256(end_len, params, buffer);
-	print_result_64((unsigned char *)params->h);
+	print_result_64((unsigned char *)params->h, opt);
 	free(buffer);
 	return (1);
 }
 
-int			read_file_sha256(char *filename, t_params_sha256 *params)
+int			read_file_sha256(char *filename, t_params_sha256 *params, t_opt *opt)
 {
 	char		buffer[8192 + 64];
 	int			fd;
@@ -65,20 +65,25 @@ int			read_file_sha256(char *filename, t_params_sha256 *params)
 
 	if (!ft_init_sha256(&original_file_size, &fd, filename))
 		return (0);
-	while ((r = read(fd, buffer, 8192)) || original_file_size == 0)
+	while (fd != -1 && ((r = read(fd, buffer, 8192)) || original_file_size == 0))
 	{
 		if (r < 0 && fd == 0)
+		{
 			r = 0;
+			fd = -1;
+		}
 		else if (r < 0 && (close(fd) || 1))
 		{
 			ft_putstr_fd("Read error\n", 2);
 			return (0);
 		}
+		if (r > 0 && opt->flags & P_OPT)
+			write(1, buffer, r);
 		r = r < 8192 ? sha256_padd_buffer(original_file_size, r, buffer) : r;
 		hash_buffer_sha256(r, params, buffer);
 		original_file_size += r;
 	}
-	print_result_64((unsigned char *)params->h);
+	print_result_64((unsigned char *)params->h, opt);
 	close(fd);
 	return (1);
 }
@@ -97,8 +102,8 @@ int			main_256(t_opt *opt)
 	params.schedule = schedule;
 	params.working = working;
 	if (opt->flags & S_OPT)
-		compute_from_string(opt->content, &params);
+		compute_from_string(opt->content, &params, opt);
 	else
-		read_file_sha256(opt->content, &params);
+		read_file_sha256(opt->content, &params, opt);
 	return (0);
 }

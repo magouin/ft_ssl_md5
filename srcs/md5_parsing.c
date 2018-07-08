@@ -6,7 +6,7 @@
 /*   By: jcamhi <jcamhi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/08 17:37:14 by jcamhi            #+#    #+#             */
-/*   Updated: 2018/07/08 17:39:18 by jcamhi           ###   ########.fr       */
+/*   Updated: 2018/07/08 18:53:32 by jcamhi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		padd_buffer(int original_file_size, int r, char *buffer)
 	return (size);
 }
 
-int		compute_from_string_md5(char *str)
+int		compute_from_string_md5(char *str, t_opt *opt)
 {
 	size_t			original_len;
 	size_t			end_len;
@@ -41,14 +41,14 @@ int		compute_from_string_md5(char *str)
 	ft_strcpy(buffer, str);
 	end_len = padd_buffer(0, original_len, buffer);
 	hash_buffer_md5(end_len, &params, buffer);
-	print_result_32(params.buffer);
+	print_result_32(params.buffer, opt);
 	free(buffer);
 	return (1);
 }
 
 int		if_r_smaller_than_zero(ssize_t *r, int *fd)
 {
-	if (fd == 0)
+	if (*fd == 0)
 	{
 		*r = 0;
 		*fd = -1;
@@ -62,7 +62,7 @@ int		if_r_smaller_than_zero(ssize_t *r, int *fd)
 	}
 }
 
-int		read_file(char *filename)
+int		read_file(char *filename, t_opt *opt)
 {
 	char			buffer[8192 + 64];
 	int				fd;
@@ -78,12 +78,14 @@ int		read_file(char *filename)
 	{
 		if (r < 0 && if_r_smaller_than_zero(&r, &fd) == 0)
 			return (0);
+		if (r > 0 && opt->flags & P_OPT)
+			write(1, buffer, r);
 		if (r < 8192)
 			r = padd_buffer(original_file_size, r, buffer);
 		hash_buffer_md5(r, &params, buffer);
 		original_file_size += r;
 	}
-	print_result_32(params.buffer);
+	print_result_32(params.buffer, opt);
 	close(fd);
 	return (1);
 }
