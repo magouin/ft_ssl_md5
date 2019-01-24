@@ -105,8 +105,8 @@ int			parse_options(int ac, char **av, t_opt *opt)
 	{
 		ft_putstr_fd("ft_ssl: Error: '", 2);
 		ft_putstr_fd(av[1], 2);
-		ft_putstr_fd("' is an invalid command.\n\nStandard commands:\n\nMessage Dig\
-est commands:\nmd5\nsha256\n", 2);
+		ft_putstr_fd("' is an invalid command.\n\nStandard commands:\n\n\
+Message Digest commands:\nmd5\nsha256\n", 2);
 		return (0);
 	}
 	if (!do_parsing(av, opt, fun))
