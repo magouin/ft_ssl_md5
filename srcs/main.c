@@ -41,7 +41,7 @@ int		main(int argc, char **argv)
 
 	if (argc == 1)
 	{
-		ft_putstr_fd("Usage : not like this\n", 2);
+		ft_putstr_fd("usage: ft_ssl command [command opts] [command args]\n", 2);
 		return (1);
 	}
 	if (!parse_options(argc, argv, &opt))
